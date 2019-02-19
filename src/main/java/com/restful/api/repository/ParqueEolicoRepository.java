@@ -1,7 +1,9 @@
 package com.restful.api.repository;
 
+import com.restful.api.model.ParqueEolico;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ParqueEolicoRepository {
+public interface ParqueEolicoRepository extends JpaRepository<ParqueEolico, Long> {
 }
