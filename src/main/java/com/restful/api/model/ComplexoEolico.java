@@ -1,11 +1,9 @@
 package com.restful.api.model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
 
 @Entity
 @Table(name="complexo_eolico")
@@ -14,28 +12,28 @@ public class ComplexoEolico implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 45)
     @Column(name = "nome")
     private String nome;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 45)
     @Column(name = "uf")
     private String uf;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 45)
     @Column(name = "identificador")
     private String identificador;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
