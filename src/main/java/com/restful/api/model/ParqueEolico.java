@@ -17,6 +17,7 @@ public class ParqueEolico implements Serializable {
 
     @NotNull
     @PrimaryKeyJoinColumn
+    @JoinColumn(name="complexo_eolico_id", referencedColumnName="id", foreignKey=@ForeignKey(name = "Fk_complexoeolico_id"))
     private ComplexoEolico complexoEolico;
 
     @NotEmpty
