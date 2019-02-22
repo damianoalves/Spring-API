@@ -1,13 +1,24 @@
 package com.restful.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
+
+/**
+ * @author Damiano Alves on 20/02/19
+ * damiano.alves@gmail.com
+ */
 
 @Entity
 @Table(name="parque_eolico")
+@ApiModel
 public class ParqueEolico implements Serializable {
 
     @Id
@@ -15,9 +26,9 @@ public class ParqueEolico implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @PrimaryKeyJoinColumn
-    @JoinColumn(name="complexo_eolico_id", referencedColumnName="id", foreignKey=@ForeignKey(name = "Fk_complexoeolico_id"))
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "complexo_eolico_id", nullable = false, foreignKey=@ForeignKey(name = "Fk_complexo_eolico_id"))
+    @JsonIgnore
     private ComplexoEolico complexoEolico;
 
     @NotEmpty
@@ -32,6 +43,13 @@ public class ParqueEolico implements Serializable {
     @NotNull
     @Column(name = "potencia_instalada")
     private Float potenciaInstalada;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "parqueEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Aerogerador> aerogeradores;
+
+    public ParqueEolico() {
+    }
 
     public Long getId() {
         return id;

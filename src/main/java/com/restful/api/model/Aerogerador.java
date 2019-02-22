@@ -1,14 +1,22 @@
 package com.restful.api.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * @author Damiano Alves on 20/02/19
+ * damiano.alves@gmail.com
+ */
+
 @Entity
 @Table(name="aerogerador")
+@ApiModel
 public class Aerogerador implements Serializable {
 
     @Id
@@ -16,9 +24,10 @@ public class Aerogerador implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "parque_eolico_id")
-    private Long parqueEolicoId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "parque_eolico_id", nullable = false, foreignKey=@ForeignKey(name = "Fk_parque_eolico_id"))
+    @JsonIgnore
+    private ParqueEolico parqueEolico;
 
     @NotEmpty
     @Size(max = 45)
@@ -37,6 +46,9 @@ public class Aerogerador implements Serializable {
     @Size(max = 45)
     private String modelo;
 
+    public Aerogerador() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -45,12 +57,12 @@ public class Aerogerador implements Serializable {
         this.id = id;
     }
 
-    public Long getParqueEolicoId() {
-        return parqueEolicoId;
+    public ParqueEolico getParqueEolico() {
+        return parqueEolico;
     }
 
-    public void setParqueEolicoId(Long parqueEolicoId) {
-        this.parqueEolicoId = parqueEolicoId;
+    public void setParqueEolico(ParqueEolico parqueEolico) {
+        this.parqueEolico = parqueEolico;
     }
 
     public String getNome() {

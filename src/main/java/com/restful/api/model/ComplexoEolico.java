@@ -1,12 +1,22 @@
 package com.restful.api.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Damiano Alves on 20/02/19
+ * damiano.alves@gmail.com
+ */
+
 @Entity
 @Table(name="complexo_eolico")
+@ApiModel
 public class ComplexoEolico implements Serializable {
 
     @Id
@@ -28,6 +38,13 @@ public class ComplexoEolico implements Serializable {
     @Size(max = 45)
     @Column(name = "identificador")
     private String identificador;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "complexoEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ParqueEolico> parqueEolicos;
+
+    public ComplexoEolico() {
+    }
 
     public Long getId() {
         return id;
@@ -59,5 +76,13 @@ public class ComplexoEolico implements Serializable {
 
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
+    }
+
+    public Set<ParqueEolico> getParqueEolicos() {
+        return parqueEolicos;
+    }
+
+    public void setParqueEolicos(Set<ParqueEolico> parqueEolicos) {
+        this.parqueEolicos = parqueEolicos;
     }
 }
