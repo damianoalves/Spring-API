@@ -1,7 +1,6 @@
 package com.restful.api.resource;
 
 
-import com.restful.api.error.ErrorHandler;
 import com.restful.api.model.Aerogerador;
 import com.restful.api.model.ParqueEolico;
 import com.restful.api.repository.AerogeradorRepository;
@@ -23,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/")
-public class AerogeradorResource extends ErrorHandler {
+public class AerogeradorResource {
 
     @Autowired
     ParqueEolicoRepository parqueEolicoRepository;

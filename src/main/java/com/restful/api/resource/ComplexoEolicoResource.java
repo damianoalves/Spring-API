@@ -1,6 +1,6 @@
 package com.restful.api.resource;
 
-import com.restful.api.error.ErrorHandler;
+import com.restful.api.error.GlobalExceptionHandler;
 import com.restful.api.model.ComplexoEolico;
 import com.restful.api.repository.ComplexoEolicoRepository;
 import io.swagger.annotations.ApiOperation;
@@ -20,16 +20,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/")
-public class ComplexoEolicoResource extends ErrorHandler {
+public class ComplexoEolicoResource {
 
     @Autowired
     ComplexoEolicoRepository complexoEolicoRepository;
 
     @ApiOperation(value = "Retorna todos os complexos eólicos")
     @GetMapping(value = "complexos-eolicos")
-    public ResponseEntity<List<ComplexoEolico>> readAllComplexoEolico() {
+    public ResponseEntity readAllComplexoEolico()  {
         List<ComplexoEolico> complexoEolicos = complexoEolicoRepository.findAll();
-        if (complexoEolicos.isEmpty()) return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        if (complexoEolicos.isEmpty()) return new ResponseEntity( HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(complexoEolicos, HttpStatus.OK);
     }
 

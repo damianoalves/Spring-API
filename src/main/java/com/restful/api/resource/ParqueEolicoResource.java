@@ -1,7 +1,6 @@
 package com.restful.api.resource;
 
 import com.restful.api.error.CustomException;
-import com.restful.api.error.ErrorHandler;
 import com.restful.api.model.ComplexoEolico;
 import com.restful.api.model.ParqueEolico;
 import com.restful.api.repository.ComplexoEolicoRepository;
@@ -28,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value="/")
 @Api( value = "Parque Eolico")
-public class ParqueEolicoResource extends ErrorHandler {
+public class ParqueEolicoResource {
 
     @Autowired
     ParqueEolicoRepository parqueEolicoRepository;
@@ -51,7 +50,7 @@ public class ParqueEolicoResource extends ErrorHandler {
             @PathVariable("complexoId") Long complexoId,
             @PathVariable("parqueId") Long parqueId ) {
         Optional<ComplexoEolico> complexoEolico = complexoEolicoRepository.findById(complexoId);
-        if (!complexoEolico.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!complexoEolico.isPresent()) throw new CustomException("Complexo eólico não encontrado", HttpStatus.NOT_FOUND);
         Optional<ParqueEolico> parqueEolico = parqueEolicoRepository.findById(parqueId);
         if (!parqueEolico.isPresent()) throw new CustomException("Parque eólico não encontrado", HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(parqueEolico, HttpStatus.OK);
