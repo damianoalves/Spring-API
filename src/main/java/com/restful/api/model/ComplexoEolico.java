@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="complexo_eolico")
-@ApiModel
+@ApiModel(value="Complexo Eolico", description="Modelo de dados de complexo eólico")
 public class ComplexoEolico implements Serializable {
 
     @Id
@@ -39,7 +39,7 @@ public class ComplexoEolico implements Serializable {
     @Column(name = "identificador")
     private String identificador;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "complexoEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ParqueEolico> parqueEolicos;
 

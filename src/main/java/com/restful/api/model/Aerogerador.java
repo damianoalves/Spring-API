@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="aerogerador")
-@ApiModel
+@ApiModel(value="Aerogerador", description="Modelo de dados de aerogeradores")
 public class Aerogerador implements Serializable {
 
     @Id

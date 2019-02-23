@@ -3,6 +3,7 @@ package com.restful.api.resource;
 import com.restful.api.error.GlobalExceptionHandler;
 import com.restful.api.model.ComplexoEolico;
 import com.restful.api.repository.ComplexoEolicoRepository;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/")
+@Api(value = "Complexo Eólico", description = "Serviços relacionados aos complexos eólicos do sistema")
 public class ComplexoEolicoResource {
 
     @Autowired
@@ -70,7 +72,4 @@ public class ComplexoEolicoResource {
         complexoEolicoRepository.deleteById(id);
         return new ResponseEntity (HttpStatus.NO_CONTENT);
     }
-
-
-
 }

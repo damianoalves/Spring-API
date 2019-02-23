@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/")
-@Api( value = "Parque Eolico")
+@Api( value = "Parque Eolico", description = "Serviços relacionados aos parques eólicos do sistema")
 public class ParqueEolicoResource {
 
     @Autowired
@@ -98,5 +98,4 @@ public class ParqueEolicoResource {
         parqueEolicoRepository.deleteById(parqueId);
         return new ResponseEntity (HttpStatus.NO_CONTENT);
     }
-
 }

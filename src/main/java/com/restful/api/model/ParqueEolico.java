@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="parque_eolico")
-@ApiModel
+@ApiModel(value="Parque Eolico", description="Modelo de dados de parque eólico")
 public class ParqueEolico implements Serializable {
 
     @Id
@@ -97,5 +97,13 @@ public class ParqueEolico implements Serializable {
 
     public void setPotenciaInstalada(Float potenciaInstalada) {
         this.potenciaInstalada = potenciaInstalada;
+    }
+
+    public Set<Aerogerador> getAerogeradores() {
+        return aerogeradores;
+    }
+
+    public void setAerogeradores(Set<Aerogerador> aerogeradores) {
+        this.aerogeradores = aerogeradores;
     }
 }

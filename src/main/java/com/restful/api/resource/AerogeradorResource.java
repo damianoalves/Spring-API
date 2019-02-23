@@ -5,6 +5,7 @@ import com.restful.api.model.Aerogerador;
 import com.restful.api.model.ParqueEolico;
 import com.restful.api.repository.AerogeradorRepository;
 import com.restful.api.repository.ParqueEolicoRepository;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/")
+@Api(value = "Aerogerador", description = "Serviços relacionados aos aerogeradores do sistema")
 public class AerogeradorResource {
 
     @Autowired
@@ -32,7 +34,7 @@ public class AerogeradorResource {
 
 
     @ApiOperation(value = "Retorna todos os aerogeradores de um parque eólico")
-    @GetMapping(value = "parques-eolicos/{parqueId}")
+    @GetMapping(value = "parques-eolicos/{parqueId}/aerogeradores")
     public ResponseEntity<List<Aerogerador>> readAllAerogerador(
             @PathVariable("parqueId") Long parqueId)
     {

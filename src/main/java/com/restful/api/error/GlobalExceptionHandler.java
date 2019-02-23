@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
             return new ResponseEntity<>(errorResponse, headers,  HttpStatus.METHOD_NOT_ALLOWED);
         } else if (ex instanceof HttpMessageNotReadableException) {
             ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setMessage("Corpo da requisição não encontrado");
+            errorResponse.setMessage("Erro no corpo da requisição");
             errorResponse.setCode(400);
             return new ResponseEntity<>(errorResponse, headers,  HttpStatus.BAD_REQUEST);
         } else if (ex instanceof MethodArgumentNotValidException) {
