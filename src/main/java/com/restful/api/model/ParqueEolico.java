@@ -1,25 +1,37 @@
 package com.restful.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
+
+/**
+ * @author Damiano Alves on 20/02/19
+ * damiano.alves@gmail.com
+ */
 
 @Entity
 @Table(name="parque_eolico")
+@ApiModel(value="Parque Eolico", description="Modelo de dados de parque eólico")
 public class ParqueEolico implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id", table = "complexo_eolico")
-    private Integer complexo_elolico_id;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "complexo_eolico_id", nullable = false, foreignKey=@ForeignKey(name = "Fk_complexo_eolico_id"))
+    @JsonIgnore
+    private ComplexoEolico complexoEolico;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 45)
     @Column(name = "nome")
     private String nome;
@@ -29,22 +41,30 @@ public class ParqueEolico implements Serializable {
     private Integer longitude;
 
     @NotNull
-    private Float potencia_instalada;
+    @Column(name = "potencia_instalada")
+    private Float potenciaInstalada;
 
-    public Integer getId() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "parqueEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Aerogerador> aerogeradores;
+
+    public ParqueEolico() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getComplexo_elolico_id() {
-        return complexo_elolico_id;
+    public ComplexoEolico getComplexoEolico() {
+        return complexoEolico;
     }
 
-    public void setComplexo_elolico_id(Integer complexo_elolico_id) {
-        this.complexo_elolico_id = complexo_elolico_id;
+    public void setComplexoEolico(ComplexoEolico complexoElolico) {
+        this.complexoEolico = complexoElolico;
     }
 
     public String getNome() {
@@ -71,11 +91,19 @@ public class ParqueEolico implements Serializable {
         this.longitude = longitude;
     }
 
-    public Float getPotencia_instalada() {
-        return potencia_instalada;
+    public Float getPotenciaInstalada() {
+        return potenciaInstalada;
     }
 
-    public void setPotencia_instalada(Float potencia_instalada) {
-        this.potencia_instalada = potencia_instalada;
+    public void setPotenciaInstalada(Float potenciaInstalada) {
+        this.potenciaInstalada = potenciaInstalada;
+    }
+
+    public Set<Aerogerador> getAerogeradores() {
+        return aerogeradores;
+    }
+
+    public void setAerogeradores(Set<Aerogerador> aerogeradores) {
+        this.aerogeradores = aerogeradores;
     }
 }
