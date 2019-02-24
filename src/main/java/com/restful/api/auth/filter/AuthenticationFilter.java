@@ -12,7 +12,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class JWTAuthenticationFilter extends GenericFilterBean {
+/**
+ * @author Damiano Alves on 23/02/19
+ * damiano.alves@gmail.com
+ */
+public class AuthenticationFilter extends GenericFilterBean {
 
     public void doFilter(ServletRequest request,
                          ServletResponse response,

@@ -1,10 +1,9 @@
-package com.restful.api.auth;
+package com.restful.api.auth.filter;
 
 /**
 * @author Damiano Alves on 22/02/19
 * damiano.alves@gmail.com
 */
-
 public class UserCredentials {
 
     private String username;
