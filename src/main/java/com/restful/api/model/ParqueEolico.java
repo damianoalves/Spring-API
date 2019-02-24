@@ -48,7 +48,7 @@ public class ParqueEolico implements Serializable {
     @ApiModelProperty(required = true)
     private Float potenciaInstalada;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "parqueEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ApiModelProperty(hidden = true)
     private Set<Aerogerador> aerogeradores;
