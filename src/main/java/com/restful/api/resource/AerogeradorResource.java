@@ -1,6 +1,7 @@
 package com.restful.api.resource;
 
 
+import com.restful.api.error.NotFoundException;
 import com.restful.api.model.Aerogerador;
 import com.restful.api.model.ParqueEolico;
 import com.restful.api.repository.AerogeradorRepository;
@@ -22,7 +23,7 @@ import java.util.Optional;
  */
 
 @RestController
-@RequestMapping(value="/")
+@RequestMapping(value="/", headers = {"Authorization"})
 @Api(value = "Aerogerador", description = "Serviços relacionados aos aerogeradores do sistema")
 public class AerogeradorResource {
 
@@ -36,10 +37,9 @@ public class AerogeradorResource {
     @ApiOperation(value = "Retorna todos os aerogeradores de um parque eólico")
     @GetMapping(value = "parques-eolicos/{parqueId}/aerogeradores")
     public ResponseEntity<List<Aerogerador>> readAllAerogerador(
-            @PathVariable("parqueId") Long parqueId)
-    {
+            @PathVariable("parqueId") Long parqueId) {
         List<Aerogerador> aerogeradors = aerogeradorRepository.findByParqueEolicoId(parqueId);
-        if (aerogeradors.isEmpty()) return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        if (aerogeradors.isEmpty()) throw new NotFoundException("Aerogeradores não encontrados");
         return new ResponseEntity<>(aerogeradors, HttpStatus.OK);
     }
 
@@ -51,7 +51,7 @@ public class AerogeradorResource {
         Optional<ParqueEolico> parqueEolico = parqueEolicoRepository.findById(parqueId);
         if (!parqueEolico.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
         Optional<Aerogerador> aerogerador = aerogeradorRepository.findById(aeroId);
-        if (!aerogerador.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!aerogerador.isPresent()) throw new NotFoundException("Aerogerador não encontrado");
         return new ResponseEntity<>(aerogerador, HttpStatus.OK);
     }
 
@@ -74,9 +74,9 @@ public class AerogeradorResource {
             @PathVariable("aeroId") Long aeroId,
             @Valid @RequestBody Aerogerador body) {
         Optional<ParqueEolico> parqueEolico = parqueEolicoRepository.findById(parqueId);
-        if (!parqueEolico.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!parqueEolico.isPresent()) throw new NotFoundException("Parque eólico não encontrado");
         Optional<Aerogerador> aerogerador = aerogeradorRepository.findById(aeroId);
-        if (!aerogerador.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!aerogerador.isPresent()) throw new NotFoundException("Aerogerador não encontrado");
         aerogerador.get().setNome(body.getNome());
         aerogerador.get().setLatitude(body.getLatitude());
         aerogerador.get().setLongitude(body.getLongitude());
@@ -94,9 +94,9 @@ public class AerogeradorResource {
             @PathVariable("parqueId") Long parqueId,
             @PathVariable("aeroId") Long aeroId) {
         Optional<ParqueEolico> parqueEolico = parqueEolicoRepository.findById(parqueId);
-        if (!parqueEolico.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!parqueEolico.isPresent()) throw new NotFoundException("Parque eólico não encontrado");
         Optional<Aerogerador> aerogerador = aerogeradorRepository.findById(aeroId);
-        if (!aerogerador.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!aerogerador.isPresent()) throw new NotFoundException("Aerogerador não encontrado");
         aerogeradorRepository.deleteById(aeroId);
         return new ResponseEntity (HttpStatus.NO_CONTENT);
     }

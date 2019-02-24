@@ -5,7 +5,7 @@ package com.restful.api.auth;
 * damiano.alves@gmail.com
 */
 
-public class AccountCredentials {
+public class UserCredentials {
 
     private String username;
     private String password;

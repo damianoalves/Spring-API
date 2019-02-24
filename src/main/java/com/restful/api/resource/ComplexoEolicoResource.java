@@ -1,6 +1,6 @@
 package com.restful.api.resource;
 
-import com.restful.api.error.GlobalExceptionHandler;
+import com.restful.api.error.NotFoundException;
 import com.restful.api.model.ComplexoEolico;
 import com.restful.api.repository.ComplexoEolicoRepository;
 import io.swagger.annotations.Api;
@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 
 @RestController
-@RequestMapping(value="/")
+@RequestMapping(value="/", headers = {"Authorization"})
 @Api(value = "Complexo Eólico", description = "Serviços relacionados aos complexos eólicos do sistema")
 public class ComplexoEolicoResource {
 
@@ -29,9 +29,9 @@ public class ComplexoEolicoResource {
 
     @ApiOperation(value = "Retorna todos os complexos eólicos")
     @GetMapping(value = "complexos-eolicos")
-    public ResponseEntity readAllComplexoEolico()  {
+    public ResponseEntity readAllComplexoEolico( ) {
         List<ComplexoEolico> complexoEolicos = complexoEolicoRepository.findAll();
-        if (complexoEolicos.isEmpty()) return new ResponseEntity( HttpStatus.NOT_FOUND);
+        if (complexoEolicos.isEmpty()) throw new NotFoundException("Complexos eólicos não encontrados");
         return new ResponseEntity<>(complexoEolicos, HttpStatus.OK);
     }
 
@@ -39,7 +39,7 @@ public class ComplexoEolicoResource {
     @GetMapping(value = "complexos-eolicos/{id}")
     public ResponseEntity readComplexoEolico(@PathVariable("id") Long id) {
         Optional<ComplexoEolico> complexoEolico = complexoEolicoRepository.findById(id);
-        if (!complexoEolico.isPresent()) return new ResponseEntity (HttpStatus.NOT_FOUND);
+        if (!complexoEolico.isPresent()) throw new NotFoundException("Complexo eólico não encontrado");
         return new ResponseEntity<>(complexoEolico, HttpStatus.OK);
     }
 
@@ -56,7 +56,7 @@ public class ComplexoEolicoResource {
             @PathVariable("id") Long id,
             @Valid @RequestBody ComplexoEolico body) {
         Optional<ComplexoEolico> complexoEolico = complexoEolicoRepository.findById(id);
-        if (!complexoEolico.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (!complexoEolico.isPresent()) throw new NotFoundException("Complexo eólico não encontrado");
         complexoEolico.get().setNome(body.getNome());
         complexoEolico.get().setUf(body.getUf());
         complexoEolico.get().setIdentificador(body.getIdentificador());
@@ -68,7 +68,7 @@ public class ComplexoEolicoResource {
     @DeleteMapping(value = "complexos-eolicos/{id}")
     public ResponseEntity deleteComplexoEolico(@PathVariable("id") long id) {
         Optional<ComplexoEolico> complexoEolico = complexoEolicoRepository.findById(id);
-        if (!complexoEolico.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (!complexoEolico.isPresent()) throw new NotFoundException("Complexo eólico não encontrado");
         complexoEolicoRepository.deleteById(id);
         return new ResponseEntity (HttpStatus.NO_CONTENT);
     }

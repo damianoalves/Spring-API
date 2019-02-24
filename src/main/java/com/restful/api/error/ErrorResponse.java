@@ -13,7 +13,9 @@ import java.util.List;
 public class ErrorResponse {
 
     private Integer code;
+
     private String message;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<ObjectError> details;
 
