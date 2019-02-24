@@ -2,7 +2,10 @@ package com.restful.api.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -22,16 +25,19 @@ public class Aerogerador implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(hidden = true)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.PERSIST)
     @JoinColumn(name = "parque_eolico_id", nullable = false, foreignKey=@ForeignKey(name = "Fk_parque_eolico_id"))
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private ParqueEolico parqueEolico;
 
     @NotEmpty
     @Size(max = 45)
     @Column(name = "nome")
+    @ApiModelProperty(required = true)
     private String nome;
 
     private Float latitude;
@@ -44,6 +50,7 @@ public class Aerogerador implements Serializable {
 
     @NotEmpty
     @Size(max = 45)
+    @ApiModelProperty(required = true)
     private String modelo;
 
     public Aerogerador() {

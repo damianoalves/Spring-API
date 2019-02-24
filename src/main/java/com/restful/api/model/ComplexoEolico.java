@@ -2,6 +2,7 @@ package com.restful.api.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -22,25 +23,30 @@ public class ComplexoEolico implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(hidden = true)
     private Long id;
 
     @NotEmpty
     @Size(max = 45)
     @Column(name = "nome")
+    @ApiModelProperty(required = true)
     private String nome;
 
     @NotEmpty
     @Size(max = 45)
     @Column(name = "uf")
+    @ApiModelProperty(required = true)
     private String uf;
 
     @NotEmpty
     @Size(max = 45)
     @Column(name = "identificador")
+    @ApiModelProperty(required = true)
     private String identificador;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "complexoEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ApiModelProperty(hidden = true)
     private Set<ParqueEolico> parqueEolicos;
 
     public ComplexoEolico() {

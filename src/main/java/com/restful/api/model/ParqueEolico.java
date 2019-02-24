@@ -3,6 +3,7 @@ package com.restful.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +25,7 @@ public class ParqueEolico implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(hidden = true)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.PERSIST)
@@ -34,6 +36,7 @@ public class ParqueEolico implements Serializable {
     @NotEmpty
     @Size(max = 45)
     @Column(name = "nome")
+    @ApiModelProperty(required = true)
     private String nome;
 
     private Integer latitude;
@@ -42,10 +45,12 @@ public class ParqueEolico implements Serializable {
 
     @NotNull
     @Column(name = "potencia_instalada")
+    @ApiModelProperty(required = true)
     private Float potenciaInstalada;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @OneToMany(mappedBy = "parqueEolico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ApiModelProperty(hidden = true)
     private Set<Aerogerador> aerogeradores;
 
     public ParqueEolico() {
