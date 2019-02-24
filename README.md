@@ -20,7 +20,7 @@ Essa API foi colocada no ar, usando o [Heroku](https://www.heroku.com/) como pla
 
 ## Built With
 
-* [Spring Boot](spring.io/projects/spring-boot) - O web framework
+* [Spring Boot](https://spring.io/projects/spring-boot) - O web framework
 * [Maven](https://maven.apache.org/) - Dependency Management
 
 ## Authors
@@ -31,4 +31,4 @@ See also the list of [contributors](https://github.com/DamianoAlves/Spring-api/g
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
