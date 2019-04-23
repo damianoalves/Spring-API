@@ -23,6 +23,7 @@ import java.util.Optional;
  */
 
 @RestController
+@CrossOrigin(maxAge = 3600)
 @RequestMapping(value="/", headers = {"Authorization"})
 @Api(value = "Aerogerador", description = "Serviços relacionados aos aerogeradores do sistema")
 public class AerogeradorResource {
