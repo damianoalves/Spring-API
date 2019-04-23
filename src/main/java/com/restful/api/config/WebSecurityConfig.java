@@ -2,8 +2,6 @@ package com.restful.api.config;
 
 import com.restful.api.auth.filter.AuthenticationFilter;
 import com.restful.api.auth.filter.LoginFilter;
-import io.jsonwebtoken.lang.Arrays;
-import io.jsonwebtoken.lang.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,8 +13,9 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 /**
  * @author Damiano Alves on 22/02/19
@@ -35,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.cors();
     }
 
     @Override
@@ -44,5 +44,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser(System.getenv("USER_ADMIN"))
                 .password(encoder.encode(System.getenv("USER_PASSWORD")))
                 .roles("ADMIN");
+    }
+
+    @Bean
+    UrlBasedCorsConfigurationSource corsConfigurationSource()
+    {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
+        configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

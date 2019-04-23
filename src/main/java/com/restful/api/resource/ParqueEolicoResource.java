@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 
 @RestController
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RequestMapping(value="/", headers = {"Authorization"})
 @Api( value = "Parque Eolico", description = "Serviços relacionados aos parques eólicos do sistema")
 public class ParqueEolicoResource {
