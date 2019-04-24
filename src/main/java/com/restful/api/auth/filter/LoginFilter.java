@@ -14,8 +14,10 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 /**
  * @author Damiano Alves on 23/02/19
@@ -32,12 +34,13 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(
             HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException, IOException, ServletException {
-        UserCredentials creds = new ObjectMapper().readValue(req.getInputStream(), UserCredentials.class);
+        ObjectMapper mapper = new ObjectMapper();
+        UserCredentials user = mapper.readValue(req.getInputStream(),UserCredentials.class);
 
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        creds.getUsername(),
-                        creds.getPassword(),
+                        user.getUsername(),
+                        user.getPassword(),
                         Collections.<GrantedAuthority>emptyList()
                 )
         );
