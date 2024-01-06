@@ -83,7 +83,6 @@ public class AerogeradorResource {
         aerogerador.get().setLongitude(body.getLongitude());
         aerogerador.get().setAlturaTorre(body.getAlturaTorre());
         aerogerador.get().setModelo(body.getModelo());
-        aerogerador.get().setLongitude(body.getLongitude());
 
         aerogeradorRepository.save(aerogerador.get());
         return new ResponseEntity<>(aerogerador, HttpStatus.CREATED);
